@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'south',
 
     # Project apps
+    'unilearn',
     'lecture',
     
 )
