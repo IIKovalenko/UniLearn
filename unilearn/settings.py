@@ -92,8 +92,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'unilearn.urls'
@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     # Must have
     'south',
     'django_nose',
+    'debug_toolbar',
 
     # Project apps
     'unilearn',
@@ -158,3 +159,6 @@ LOGGING = {
 # Testing settings
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--with-spec', '--spec-color',]
+
+# DDT settings
+INTERNAL_IPS = ('127.0.0.1',)
