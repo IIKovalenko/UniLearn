@@ -54,7 +54,7 @@ class Student(models.Model):
         verbose_name_plural = u"Students"
 
     def __unicode__(self):
-        return u"[%c course [%g] %s"%(self.curriculum, self.group_abbrev, self.full_name)
+        return u"%s"%(self.full_name)
     
 
 class Lecture(models.Model):

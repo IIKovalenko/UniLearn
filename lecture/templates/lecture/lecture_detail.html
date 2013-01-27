@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{ lecture.title }} {% endblock %}
+
+{% block content %}
+<h1> {{ lecture.title }} </h1>
+<div>
+    {{ lecture.text|safe }}
+</div>
+{% endblock %}

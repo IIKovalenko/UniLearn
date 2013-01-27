@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{ course }} info {% endblock %}
+
+{% block content %}
+   Lectures in course:
+   {% if lectures %}
+        <ul>
+            {% for lecture in lectures %}
+                <li>{{ lecture.title }}</li>
+            {% endfor %}
+        </ul>
+   {% else %}
+      <div> Sorry, no lectures in this course for now.</div>
+   {% endif %}
+{% endblock %}
