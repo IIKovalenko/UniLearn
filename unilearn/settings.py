@@ -118,6 +118,7 @@ INSTALLED_APPS = (
 
     # Must have
     'south',
+    'django_nose',
 
     # Project apps
     'unilearn',
@@ -153,3 +154,7 @@ LOGGING = {
         },
     }
 }
+
+# Testing settings
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--with-spec', '--spec-color',]
