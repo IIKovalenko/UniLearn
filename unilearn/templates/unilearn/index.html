@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %} Unilearn {% endblock %}
+
+{% block content %}
+<div class="hero-unit">
+  <h1>Welcome!</h1>
+  <p>Whether you are a student or a teacher, you're welcome here!</p>
+  <p>
+    <a class="btn btn-primary btn-large" href="{% url 'course-list' %}">
+      Watch courses list
+    </a>
+  </p>
+</div>
+{% endblock %}

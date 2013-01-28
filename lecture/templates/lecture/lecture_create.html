@@ -3,5 +3,8 @@
 {% block title %} Add lecture {% endblock %}
 
 {% block content %}
-    {{ form.as_p }}
+    <form method="post" class="form">
+        {% include 'unilearn/blocks/form.html' with form=form %}
+        <input type="submit" class="btn btn-primary btn-large" value="Lecture course" />
+    </form>
 {% endblock %}
