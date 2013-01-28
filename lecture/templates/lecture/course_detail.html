@@ -7,7 +7,9 @@
    {% if lectures %}
         <ul>
             {% for lecture in lectures %}
-                <li>{{ lecture.title }}</li>
+                <li>
+                    <a href="{% url 'lecture-detail' course.pk lecture.number %}">{{ lecture.title }}</a>
+                </li>
             {% endfor %}
         </ul>
    {% else %}
