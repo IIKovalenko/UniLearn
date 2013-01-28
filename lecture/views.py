@@ -1,4 +1,4 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, CreateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 
@@ -29,3 +29,13 @@ class LectureDetailView(TemplateView):
         context = super(LectureDetailView, self).get_context_data(**kwargs)
         context['lecture'] = Lecture.objects.get(course__pk = self.kwargs['course_pk'], number = self.kwargs['lecture_num'])
         return context
+
+
+class CourseCreateView(CreateView):
+    template_name='lecture/course_create.html'
+    model = Course
+
+
+class LectureCreateView(CreateView):
+    template_name='lecture/lecture_create.html'
+    model = Lecture
