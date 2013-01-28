@@ -1,18 +1,39 @@
 {% extends 'layout.html' %}
 
+{% load staticfiles %}
+
 {% block title %} {{ course }} info {% endblock %}
 
+{% block css %}
+    {{ block.super }}
+    <link href="{% static 'course.css' %}" rel="stylesheet">    
+{% endblock %}
+
 {% block content %}
-   Lectures in course:
-   {% if lectures %}
-        <ul>
-            {% for lecture in lectures %}
-                <li>
-                    <a href="{% url 'lecture-detail' course.pk lecture.number %}">{{ lecture.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-   {% else %}
-      <div> Sorry, no lectures in this course for now.</div>
-   {% endif %}
+    <dl class="dl-horizontal" class="course-info">
+
+      <dd>
+          <span class="course-info__name">{{ course.title }}</span>
+          <span class="course-info__abbrev">({{ course.abbrev }})</span>
+      </dd>
+      <dt>Prerequsites</dt>
+      <dd>{{ course.prerequsites }}</dd>
+      <dt>Description</dt>
+      <dd>{{ course.description }}</dd>
+      <dt>Lectures in course</dt>      
+      <dd>   
+          {% if lectures %}
+               <ol>
+                   {% for lecture in lectures %}
+                       <li>
+                           <a href="{% url 'lecture-detail' course.pk lecture.number %}">{{ lecture.title }}</a>
+                       </li>
+                   {% endfor %}
+               </ol>
+          {% else %}
+             <div> Sorry, no lectures in this course for now.</div>
+          {% endif %}
+      </dd>
+   </dl>
+
 {% endblock %}

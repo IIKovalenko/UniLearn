@@ -2,6 +2,7 @@ South==0.7.3
 factory-boy==1.2.0
 nose==1.2.1
 django-nose==1.1
+pinocchio==0.3.1
 django-debug-toolbar==0.9.4
 
 Django==1.5c1
