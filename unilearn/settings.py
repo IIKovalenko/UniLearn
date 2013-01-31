@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'unilearn',
     'lecture',
     'account',
+    'exam',
     
 )
 

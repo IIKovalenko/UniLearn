@@ -2,7 +2,9 @@ from django.views.generic import ListView, TemplateView, CreateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 
-from lecture.models import Course, Lecture
+from .models import Course, Lecture
+from exam.forms import LectureTestForm
+from exam.factories import TestQuestionFactory
 
 
 class CourseListView(ListView):
@@ -27,7 +29,13 @@ class LectureDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(LectureDetailView, self).get_context_data(**kwargs)
-        context['lecture'] = Lecture.objects.get(course__pk = self.kwargs['course_pk'], number = self.kwargs['lecture_num'])
+        lecture = Lecture.objects.get(course__pk = self.kwargs['course_pk'], number = self.kwargs['lecture_num'])
+        context['lecture'] = lecture
+        context['test'] = LectureTestForm.get_lecture_test_form(lecture.pk)
+        print context['test']
+        if not len(context['test'].fields):
+            [TestQuestionFactory for _ in xrange(5)]
+            
         return context
 
 
