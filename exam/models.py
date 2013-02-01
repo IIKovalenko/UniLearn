@@ -7,6 +7,25 @@ class LectureTest(models.Model):
     def __unicode__(self):
         return 'Test for lecture %s' % self.lecture
 
+    @classmethod
+    def get_lecture_test_info(cls, lecture_pk):
+        """Return list with info about questions and variants for creating LectureTestForm."""
+        questions = TestQuestion.objects.filter(test__lecture__pk=lecture_pk)
+
+        questions_pks = [q.pk for q in questions]
+        all_variants = list(TestQuestionVariant.objects.filter(question__pk__in=questions_pks))
+        result = []
+        for q in questions:
+            question_info = {}
+            question_info['question_pk'] = q.pk
+            question_info['question'] = q.question
+            question_info['variants'] = {}
+            this_questions_variants = filter(lambda v: v.question == q, all_variants)
+            for variant in this_questions_variants:  #FIXME: simplify with dict compehansion
+                question_info['variants'][variant.number] = variant.text
+            result.append(question_info)
+        return result
+     
 
 class TestQuestion(models.Model):
     QUESION_TYPES = {

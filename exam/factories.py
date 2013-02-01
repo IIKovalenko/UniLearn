@@ -15,7 +15,7 @@ class TestQuestionFactory(factory.Factory):
     test = factory.SubFactory(LectureTestFactory)
     question = factory.Sequence(lambda n: ' Test question %s' % n)
     type = 'FV'
-    correct_answer_index = factory.Sequence(lambda n: n)
+    correct_answer_index = factory.Sequence(lambda n: int(n))
 
 
 class TestQuestionVariantFactory(factory.Factory):
@@ -23,4 +23,4 @@ class TestQuestionVariantFactory(factory.Factory):
 
     question = factory.SubFactory(TestQuestionFactory)
     text = factory.Sequence(lambda n: 'Test variant %s' % n)
-    number = factory.Sequence(lambda n: n)
+    number = factory.Sequence(lambda n: int(n))
