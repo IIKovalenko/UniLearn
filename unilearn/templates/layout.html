@@ -5,7 +5,7 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
 
-        <link href="{% static 'layout.css' %}" rel="stylesheet">
+        <link href="{% static 'css/layout.css' %}" rel="stylesheet">
         <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" >
         {% block css %} {% endblock %}
 
@@ -15,11 +15,39 @@
           <div class="navbar-inner">
             <a class="brand" href="{% url 'index' %}">UniLearn</a>
             <ul class="nav">
-              <li><a href="{% url 'course-list' %}">Courses list</a></li>
-              <li><a href="{% url 'course-add' %}">Add course</a></li>
-              <li>{{ request.user.username }}</li>
-              <li><a href="{% url 'login' %}">Login</a></li>
-              <li><a href="{% url 'logout' %}">Logout</a></li>              
+            </ul>
+            <ul class="nav pull-right">            
+              <li class="js-menu__active_on_hover">
+                <a href="{% url 'course-list' %}">
+                  <span class="icon-list" title="Courses list"></span>
+                </a>
+              </li>
+              <li class="js-menu__active_on_hover">
+                <a href="{% url 'course-add' %}">
+                  <span class="icon-plus" title="Add course"></span>
+                </a>
+              </li>
+              <li class="divider-vertical"></li>
+            
+            
+              <li class="js-menu__active_on_hover">
+                <a href="">
+                  <span class="icon-user" title="{{ request.user.username }}"></span>
+                </a>
+              </li>
+              {% if request.user.is_authenticated %}
+                <li class="js-menu__active_on_hover">
+                  <a href="{% url 'logout' %}">
+                    <span class="icon-off" label="Logout"></span>
+                  </a>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{% url 'login' %}">Login</a>
+                </li>
+              {% endif %}
+            </ul>
+              
             </ul>
           </div>
         </div>    
@@ -29,6 +57,7 @@
 
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/layout.js' %}"></script>
         {% block js %} {% endblock %}
     
     </body>
