@@ -1,0 +1,7 @@
+.course-info__name{
+    font-size: x-large;
+}
+
+.course-info__lectures-block {
+    min-height: 200px;
+}

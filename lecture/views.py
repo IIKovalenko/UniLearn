@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
 from .models import Course, Lecture
+from .forms import LectureRegistratinForm
 from exam.forms import LectureTestForm
 from exam.factories import TestQuestionFactory
 from exam.models import LectureTest
@@ -55,7 +56,24 @@ class CourseCreateView(CreateView):
     template_name='lecture/course_create.html'
     model = Course
 
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
 
 class LectureCreateView(CreateView):
     template_name='lecture/lecture_create.html'
     model = Lecture
+    form_class = LectureRegistratinForm
+
+    def get_form_kwargs(self):
+        kwargs = super(LectureCreateView, self).get_form_kwargs()
+        if 'course' in self.request.GET:
+            try:
+                course = Course.objects.get(pk=self.request.GET['course'])
+            except Course.DoesNotEsists:
+                return kwargs
+            kwargs.update({'initial': {'course': course}})
+        return kwargs
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()

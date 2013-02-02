@@ -16,19 +16,25 @@
             <a class="brand" href="{% url 'index' %}">UniLearn</a>
             <ul class="nav">
             </ul>
-            <ul class="nav pull-right">            
+            <ul class="nav pull-right">
+
               <li class="js-menu__active_on_hover">
                 <a href="{% url 'course-list' %}">
                   <span class="icon-list" title="Courses list"></span>
                 </a>
               </li>
-              <li class="js-menu__active_on_hover">
-                <a href="{% url 'course-add' %}">
-                  <span class="icon-plus" title="Add course"></span>
+              <li class="js-menu__active_on_hover dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle active" href="">
+                  <span class="icon-plus" title="Add course or lecture"></span>
+                  <b class="caret"></b>
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'course-add' %}">Add course</a></li>
+                  <li><a href="{% url 'lecture-add' %}">Add lecture</a></li>
+                </ul>
               </li>
               <li class="divider-vertical"></li>
-            
+              
               {% if request.user.is_authenticated %}
               <li class="js-menu__active_on_hover">
                 <a href="">

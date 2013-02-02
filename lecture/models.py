@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class University(models.Model):
     name = models.CharField('Name', max_length=100)
     abbrev = models.CharField('Abbreviation',max_length=10)
@@ -26,6 +27,10 @@ class Course(models.Model):
 
     def __unicode__(self):
 	return self.title
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'course-detail', (self.pk,), {}
 
 
 class Lecturer(models.Model):
@@ -72,3 +77,7 @@ class Lecture(models.Model):
 
     def __unicode__(self):
        	return "[%s]%s"%(self.course, self.title)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'lecture-detail', (), {'course_pk': self.course.pk, 'lecture_num': self.number}

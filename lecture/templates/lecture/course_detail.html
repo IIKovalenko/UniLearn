@@ -6,7 +6,7 @@
 
 {% block css %}
     {{ block.super }}
-    <link href="{% static 'course.css' %}" rel="stylesheet">    
+    <link href="{% static 'css/lecture.css' %}" rel="stylesheet">    
 {% endblock %}
 
 {% block content %}
@@ -21,12 +21,12 @@
       <dt>Description</dt>
       <dd>{{ course.description }}</dd>
       <dt>Lectures in course</dt>      
-      <dd>   
+      <dd class="course-info__lectures-block">   
           {% if lectures %}
                <ol>
                    {% for lecture in lectures %}
                        <li>
-                           <a href="{% url 'lecture-detail' course.pk lecture.number %}">{{ lecture.title }}</a>
+                           <a href="{{ lecture.get_absolute_url }}">{{ lecture.title }}</a>                           
                        </li>
                    {% endfor %}
                </ol>
@@ -35,5 +35,6 @@
           {% endif %}
       </dd>
    </dl>
+   <a class="btn" href="{% url 'lecture-add' %}?course={{ course.pk }}">Add lecture</a>
 
 {% endblock %}
