@@ -29,13 +29,12 @@
               </li>
               <li class="divider-vertical"></li>
             
-            
+              {% if request.user.is_authenticated %}
               <li class="js-menu__active_on_hover">
                 <a href="">
                   <span class="icon-user" title="{{ request.user.username }}"></span>
                 </a>
               </li>
-              {% if request.user.is_authenticated %}
                 <li class="js-menu__active_on_hover">
                   <a href="{% url 'logout' %}">
                     <span class="icon-off" label="Logout"></span>
