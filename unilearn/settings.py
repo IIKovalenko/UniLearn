@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'lecture',
     'account',
     'exam',
+    'makefishdata',
     
 )
 
