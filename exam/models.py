@@ -1,5 +1,7 @@
 from django.db import models
 
+from model_utils import Choices
+
 
 class LectureTest(models.Model):
     lecture = models.OneToOneField('lecture.Lecture', related_name='test')
@@ -28,22 +30,22 @@ class LectureTest(models.Model):
      
 
 class TestQuestion(models.Model):
-    QUESION_TYPES = {
-        'FV' : 'Question with fixed variants',
-        'FA' : 'Qustion with free form of answer'
-    }
-    QUESION_DIFFICULTIES = {
-        1 : 'Easy question',        
-        2 : 'Question of middle difficulty',
-        3 : 'Difficult question',
-    }
-    
+    QUESTION_TYPES = Choices(
+        ('FV', 'fixed_variants', 'Question with fixed variants'),
+        ('FA', 'free_form', 'Qustion with free form of answer')
+    )
+    QUESTION_DIFFICULTIES = Choices(
+        (1, 'easy', 'Easy question'),
+        (2, 'middle', 'Question of middle difficulty'),
+        (3, 'difficult', 'Difficult question')
+    )
+   
     test = models.ForeignKey('LectureTest', related_name='questions')
     question = models.CharField(max_length=1023)
-    type = models.CharField(max_length=2, choices=QUESION_TYPES.items(), default='FV')
+    type = models.CharField(max_length=2, choices=QUESTION_TYPES, default=QUESTION_TYPES.fixed_variants)
     correct_answer_index = models.SmallIntegerField('Number of correct variant', blank=True, null=True)
     correct_answer_text = models.CharField('Correct answer for question with free form', max_length=511, blank=True)
-    difficulty = models.SmallIntegerField(max_length=1, choices=QUESION_DIFFICULTIES.items(), default=2)
+    difficulty = models.SmallIntegerField(max_length=1, choices=QUESTION_DIFFICULTIES, default=QUESTION_DIFFICULTIES.middle)
 
     def __unicode__(self):
         return self.question

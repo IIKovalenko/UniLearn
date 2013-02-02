@@ -4,5 +4,6 @@ nose==1.2.1
 django-nose==1.1
 pinocchio==0.3.1
 django-debug-toolbar==0.9.4
+django-model-utils==1.1.0
 
 Django==1.5c1
