@@ -2,11 +2,17 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from operator import attrgetter
 
+from account.models import UserProfile
 from lecture.models import Course, Lecture
 from lecture.factories import CourseFactory, LectureFactory
 
 
 class LecturesTest(TestCase):
+    def create_and_login_user(self):
+        login, password = 'test_user', 'pwd'
+        self.user = UserProfile.objects.create_user(login, 'test@user.com', password)
+        self.client.login(username=login, password=password)
+
     def setUp(self):
         self.courses_amount = 5
         self.lectures_amount = 5
@@ -14,6 +20,7 @@ class LecturesTest(TestCase):
         for course in self.courses:
             [LectureFactory(course=course) for _ in xrange(self.lectures_amount)]
         self.course = self.courses[0]
+        self.create_and_login_user()
 
     def test_course_list_shows_all_courses(self):
         response = self.client.get(reverse('course-list'))

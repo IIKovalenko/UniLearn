@@ -21,12 +21,23 @@
       <dt>Description</dt>
       <dd>{{ course.description }}</dd>
       <dt>Lectures in course</dt>      
-      <dd class="course-info__lectures-block">   
+      <dd class="course-info__lectures-block">
           {% if lectures %}
                <ol>
                    {% for lecture in lectures %}
                        <li>
-                           <a href="{{ lecture.get_absolute_url }}">{{ lecture.title }}</a>                           
+                           <a href="{{ lecture.get_absolute_url }}">{{ lecture.title }}</a>
+                               <span class="label
+                                 {% if lecture.status == 'NP' %}
+                                   label-warning
+                                 {% elif lecture.status == 'FL' %}
+                                   label-important
+                                 {% elif lecture.status == 'PD' %}
+                                   label-success
+                                 {% endif %}">
+                                 ({{ lecture.status }})
+                               </span>
+
                        </li>
                    {% endfor %}
                </ol>
