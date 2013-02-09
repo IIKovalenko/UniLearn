@@ -37,3 +37,23 @@ class LecturesTest(TestCase):
         response = self.client.get(reverse('lecture-detail', args=(lecture.course.pk, lecture.number)))
         self.assertContains(response, lecture.title)
         self.assertContains(response, lecture.text)        
+
+
+class LectureAddPageTest(TestCase):
+    def create_and_login_user(self):
+        login, password = 'test_user', 'pwd'
+        self.user = UserProfile.objects.create_user(login, 'test@user.com', password)
+        self.client.login(username=login, password=password)
+
+    def setUp(self):
+        self.course = CourseFactory()
+        self.create_and_login_user()
+
+    def test_course_field_shows_up_by_default(self):
+        response = self.client.get(reverse('lecture-add'))
+        self.assertFalse(response.context['form'].fields['course'].widget.is_hidden)
+
+    def test_course_field_hidden_with_initial_when_course_specified(self):
+        response = self.client.get('%s?course=%s' % (reverse('lecture-add'), self.course.pk))
+        self.assertTrue(response.context['form'].fields['course'].widget.is_hidden)
+        self.assertEqual(response.context['form'].initial['course'].pk, self.course.pk)

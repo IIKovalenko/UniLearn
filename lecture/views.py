@@ -95,7 +95,7 @@ class LectureCreateView(CreateView):
                 course = Course.objects.get(pk=self.request.GET['course'])
             except Course.DoesNotEsists:
                 return kwargs
-            kwargs.update({'initial': {'course': course}})
+            kwargs.update({'initial': {'course': course}, 'show_course_field': True})
         return kwargs
 
     def get_success_url(self):
