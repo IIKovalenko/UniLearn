@@ -10,7 +10,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'', include('lecture.urls')),
-
+    url(r'^profile', include('account.urls')),
+                       
     url(r'^$', IndexPageView.as_view(), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),

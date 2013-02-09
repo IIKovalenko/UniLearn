@@ -1,9 +1,10 @@
-from django.views.generic import FormView, View
+from django.views.generic import FormView, View, DetailView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 
+from .models import UserProfile, UserTestStatistics
 
 class LoginView(FormView):
     template_name = 'account/login.html'
@@ -32,3 +33,13 @@ class LogoutView(View):
     def get(self, request):
         return self.post(request)
 
+class ProfileDetailView(DetailView):
+    template_name = 'account/profile_detail.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileDetailView, self).get_context_data(**kwargs)
+        context['statuses'] = UserTestStatistics.objects.filter(user=self.request.user)
+        return context

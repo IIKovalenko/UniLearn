@@ -37,7 +37,7 @@
               
               {% if request.user.is_authenticated %}
               <li class="js-menu__active_on_hover">
-                <a href="">
+                <a href="{% url 'profile-detail' %}">
                   <span class="icon-user" title="{{ request.user.username }}"></span>
                 </a>
               </li>
