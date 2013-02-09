@@ -1,19 +1,15 @@
-from django.test import TestCase
 from django.core.urlresolvers import reverse
 from operator import attrgetter
 
+from unilearn.tests import AutoLoginTestCase
 from account.models import UserProfile
 from lecture.models import Course, Lecture
 from lecture.factories import CourseFactory, LectureFactory
 
 
-class LecturesTest(TestCase):
-    def create_and_login_user(self):
-        login, password = 'test_user', 'pwd'
-        self.user = UserProfile.objects.create_user(login, 'test@user.com', password)
-        self.client.login(username=login, password=password)
-
+class LecturesTest(AutoLoginTestCase):
     def setUp(self):
+        super(LecturesTest, self).setUp()
         self.courses_amount = 5
         self.lectures_amount = 5
         self.courses = [CourseFactory() for _ in xrange(self.courses_amount)]
@@ -39,13 +35,9 @@ class LecturesTest(TestCase):
         self.assertContains(response, lecture.text)        
 
 
-class LectureAddPageTest(TestCase):
-    def create_and_login_user(self):
-        login, password = 'test_user', 'pwd'
-        self.user = UserProfile.objects.create_user(login, 'test@user.com', password)
-        self.client.login(username=login, password=password)
-
+class LectureAddPageTest(AutoLoginTestCase):
     def setUp(self):
+        super(LectureAddPageTest, self).setUp()
         self.course = CourseFactory()
         self.create_and_login_user()
 

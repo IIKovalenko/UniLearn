@@ -1,7 +1,21 @@
-.course-info__name{
+.course-info__name {
     font-size: x-large;
 }
 
 .course-info__lectures-block {
     min-height: 200px;
 }
+
+.course-info__not-readed-lecture {
+
+}
+
+.course-info__not-passed-lecture {
+}
+
+.course-info__failed-lecture {
+}
+
+.course-info__passed-lecture {
+}
+

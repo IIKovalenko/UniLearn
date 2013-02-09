@@ -19,6 +19,8 @@ class Command(BaseCommand):
             default=False,
             help='Clear all tables before generating data'),
         )
+
+    # factories info in format (FactoryClass, AmountToBeCalled, ExtraKwargs)
     factory_list = [
         (CourseFactory, 3, {'lectures' : 10}),
     ]
