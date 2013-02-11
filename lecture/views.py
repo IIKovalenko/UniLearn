@@ -2,6 +2,9 @@ from django.views.generic import ListView, TemplateView, CreateView, FormView
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+
+from braces.views import LoginRequiredMixin
 
 from .models import Course, Lecture
 from .forms import LectureRegistratinForm
@@ -16,8 +19,14 @@ class CourseListView(ListView):
     template_name='lecture/course_list.html'
     context_object_name = 'courses'
 
+    def get_context_data(self, **kwargs):
+        context = super(CourseListView, self).get_context_data(**kwargs)
+        if self.request.user.is_anonymous():
+            messages.info(self.request, 'To view course info and lectures please log in or register.')
+        return context
 
-class CourseDetailView(DetailView):
+
+class CourseDetailView(LoginRequiredMixin, DetailView):
     model = Course
     template_name='lecture/course_detail.html'
     context_object_name = 'course'
@@ -31,7 +40,7 @@ class CourseDetailView(DetailView):
         return context
     
 
-class LectureDetailView(FormView):
+class LectureDetailView(LoginRequiredMixin, FormView):
     template_name = 'lecture/lecture_detail.html'
     form_class = LectureTestForm
 
@@ -63,7 +72,6 @@ class LectureDetailView(FormView):
             context['form'] = kwargs['form']
         else:
             context['form'] = LectureTestForm.get_lecture_test_form(self.lecture.pk)
-        print context['form'].errors
         return context
 
     def form_valid(self, form):
@@ -75,7 +83,7 @@ class LectureDetailView(FormView):
         return super(LectureDetailView, self).form_invalid(form)
 
 
-class CourseCreateView(CreateView):
+class CourseCreateView(LoginRequiredMixin, CreateView):
     template_name='lecture/course_create.html'
     model = Course
 
@@ -83,7 +91,7 @@ class CourseCreateView(CreateView):
         return self.object.get_absolute_url()
 
 
-class LectureCreateView(CreateView):
+class LectureCreateView(LoginRequiredMixin, CreateView):
     template_name='lecture/lecture_create.html'
     model = Lecture
     form_class = LectureRegistratinForm

@@ -1,4 +1,5 @@
 import os
+from django.core.urlresolvers import reverse
 
 
 DEBUG = True
@@ -182,3 +183,4 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # Auth settings
 AUTH_USER_MODEL = 'account.UserProfile'
+LOGIN_URL = reverse('login')

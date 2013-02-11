@@ -4,7 +4,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 
+from braces.views import LoginRequiredMixin
+
 from .models import UserProfile, UserTestStatistics
+
 
 class LoginView(FormView):
     template_name = 'account/login.html'
@@ -33,7 +36,7 @@ class LogoutView(View):
     def get(self, request):
         return self.post(request)
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView):
     template_name = 'account/profile_detail.html'
 
     def get_object(self):

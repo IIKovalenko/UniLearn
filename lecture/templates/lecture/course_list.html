@@ -7,7 +7,11 @@
         <ul>
             {% for course in courses %}
                 <li>
+                  {% if request.user.is_authenticated %}
                     <a href="{% url 'course-detail' course.pk %}">{{ course.title }}</a>
+                  {% else %}
+                    {{ course.title }}
+                  {% endif %}
                 </li>
             {% endfor %}
         </ul>

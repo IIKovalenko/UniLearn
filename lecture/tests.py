@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from operator import attrgetter
 
 from unilearn.tests import AutoLoginTestCase
-from account.models import UserProfile
+from account.models import UserProfile, UserTestStatistics
 from lecture.models import Course, Lecture
 from lecture.factories import CourseFactory, LectureFactory
 
@@ -49,3 +49,29 @@ class LectureAddPageTest(AutoLoginTestCase):
         response = self.client.get('%s?course=%s' % (reverse('lecture-add'), self.course.pk))
         self.assertTrue(response.context['form'].fields['course'].widget.is_hidden)
         self.assertEqual(response.context['form'].initial['course'].pk, self.course.pk)
+
+class LectureStatusTest(AutoLoginTestCase):
+    def setUp(self):
+        super(LectureStatusTest, self).setUp()
+        self.course = CourseFactory()
+        self.lecture = LectureFactory(course=self.course, test=True)
+        self.lecture_url = reverse('lecture-detail', args=(self.course.pk, self.lecture.number))
+        self.create_and_login_user()
+
+    def test_default_status_is_not_readed(self):
+        actual_default_status = self.user.get_lecture_status(self.lecture.pk).status
+        expected_default_status = UserTestStatistics.TEST_STATUSES.not_readed
+        self.assertEqual(actual_default_status, expected_default_status)
+
+    def test_lecture_marks_as_not_passed_when_opened(self):
+        response = self.client.get(self.lecture_url)
+        actual_status = self.user.get_lecture_status(self.lecture.pk).status
+        expected_status = UserTestStatistics.TEST_STATUSES.not_passed
+        self.assertEqual(actual_status, expected_status)
+
+    def test_lecture_marks_as_failed_when_test_fails(self):
+        response = self.client.get(self.lecture_url)
+        response = self.client.post(self.lecture_url,data={})
+        actual_status = self.user.get_lecture_status(self.lecture.pk).status
+        expected_status = UserTestStatistics.TEST_STATUSES.failed
+        self.assertEqual(actual_status, expected_status)

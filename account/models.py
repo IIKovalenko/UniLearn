@@ -10,8 +10,9 @@ class UserProfile(AbstractUser):
 
     def _update_profile_statistics(self, lecture_pk, new_status):
         stat = self.get_lecture_status(lecture_pk)
-        stat.status = new_status
-        stat.save()
+        if stat.status_can_be_changed_to(new_status):
+            stat.status = new_status
+            stat.save()
 
     def read_lecture(self, lecture_pk):
         self._update_profile_statistics(lecture_pk, UserTestStatistics.TEST_STATUSES.not_passed)
@@ -39,9 +40,18 @@ class UserTestStatistics(models.Model):
         ('FL', 'failed', 'Lecture\'s test has been failed'),
         ('PD', 'passed', 'Lecture\'s test has been passed'),        
     )
+    POSSIBLE_STATUSES_TRANSFORMATIONS = {
+        'NR': ('NP', ),
+        'NP': ('FL', 'PD', ),
+        'FL': ('PD', ),
+        'PD': (),
+    }
     user = models.ForeignKey(UserProfile)
     lecture = models.ForeignKey(Lecture)
     status = models.CharField(choices=TEST_STATUSES, default=TEST_STATUSES.not_readed, max_length=2)
 
+    def status_can_be_changed_to(self, new_status):
+        return new_status in UserTestStatistics.POSSIBLE_STATUSES_TRANSFORMATIONS[self.status]
+    
     def __unicode__(self):
 	return self.status
