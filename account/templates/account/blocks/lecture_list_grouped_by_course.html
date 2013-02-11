@@ -1,0 +1,24 @@
+{% regroup statuses by lecture.course as courses_list %}
+
+
+<ul>
+    {% for course in courses_list %}
+        <li>
+            <a href="{{ course.grouper.get_absolute_url }}" class="lectures-reading__course-name">
+                {{ course.grouper.title }}
+            </a>
+        </li>
+        <li style="list-style-type:none">
+            <ul>
+                {% for status_info in course.list %}
+                   <li>
+                       <a href="{{ status_info.lecture.get_absolute_url }}" class="lectures-reading__lecture-name">
+                           {{ status_info.lecture.title }}
+                       </a>
+                   </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+

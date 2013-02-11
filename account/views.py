@@ -44,5 +44,8 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
-        context['statuses'] = UserTestStatistics.objects.filter(user=self.request.user)
+        context['not_passed_statuses'] = UserTestStatistics.objects.filter(user=self.request.user,
+                                                                         status=UserTestStatistics.TEST_STATUSES.not_passed)
+        context['failed_statuses'] = UserTestStatistics.objects.filter(user=self.request.user,
+                                                                         status=UserTestStatistics.TEST_STATUSES.failed)
         return context

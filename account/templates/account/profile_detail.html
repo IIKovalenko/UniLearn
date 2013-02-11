@@ -5,39 +5,15 @@
 
 
 {% block content %}
-    <div>
-       <div>Lectures that you're reading:</div>
-          <ul>
-              {% for status_info in statuses %}
-                 {% if status_info.status == 'NP' %}
-                     <li>
-                         <a href="{{ status_info.lecture.get_absolute_url }}" class="lectures-reading__lecture-name">
-                             {{ status_info.lecture.title }}
-                         </a>
-                         <a href="{{ status_info.lecture.course.get_absolute_url }}" class="lectures-reading__course-name">
-                             ({{ status_info.lecture.course.title }})
-                         </a>
-                     </li>
-                 {% endif %}
-              {% endfor %}
-          </ul>
+    <div class="row">
+       <div class="span6">
+           <div>Lectures that you're reading:</div>
+              {% include 'account/blocks/lecture_list_grouped_by_course.html' with statuses=not_passed_statuses only %}
+       </div>
 
-       <div>Lectures that you're failed:</div>
-          <ul>
-              {% for status_info in statuses %}
-                 {% if status_info.status == 'FL' %}
-                     <li>
-                         <a href="{{ status_info.lecture.get_absolute_url }}" class="lectures-failed__lecture-name">
-                             {{ status_info.lecture.title }}
-                         </a>
-                         <a href="{{ status_info.lecture.course.get_absolute_url }}" class="lectures-failed__course-name">
-                             ({{ status_info.lecture.course.title }})
-                         </a>
-                     </li>
-                 {% endif %}
-              {% endfor %}
-          </ul>
-
-          
+       <div class="span6">
+           <div>Lectures that you've failed:</div>
+              {% include 'account/blocks/lecture_list_grouped_by_course.html' with statuses=failed_statuses only %}
+       </div>              
     </div>
 {% endblock %}
