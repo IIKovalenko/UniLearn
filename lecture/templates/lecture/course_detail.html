@@ -27,7 +27,7 @@
                    {% for lecture in lectures %}
                        <li>
                            <a href="{{ lecture.get_absolute_url }}">{{ lecture.title }}</a>
-                               <span class="label
+                               <span class="course-info__lecture-status label
                                  {% if lecture.status == 'NP' %}
                                    label-warning
                                  {% elif lecture.status == 'FL' %}
@@ -35,7 +35,7 @@
                                  {% elif lecture.status == 'PD' %}
                                    label-success
                                  {% endif %}">
-                                 ({{ lecture.status }})
+                                 {{ lecture.status }}
                                </span>
 
                        </li>

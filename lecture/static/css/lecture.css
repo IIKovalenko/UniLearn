@@ -6,16 +6,6 @@
     min-height: 200px;
 }
 
-.course-info__not-readed-lecture {
-
+.course-info__lecture-status {
+    margin-left: 15px;
 }
-
-.course-info__not-passed-lecture {
-}
-
-.course-info__failed-lecture {
-}
-
-.course-info__passed-lecture {
-}
-

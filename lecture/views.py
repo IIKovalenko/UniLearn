@@ -57,7 +57,7 @@ class LectureDetailView(LoginRequiredMixin, FormView):
         return super(LectureDetailView, self).get(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('course-detail', args=(self.kwargs['course_pk'],))
 
     def get_form_kwargs(self):
         kwargs = super(LectureDetailView, self).get_form_kwargs()
@@ -76,6 +76,7 @@ class LectureDetailView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         self.request.user.passed_test(self.lecture.pk)
+        messages.success(self.request, "You're succesfully passed test")
         return super(LectureDetailView, self).form_valid(form)
 
     def form_invalid(self, form):

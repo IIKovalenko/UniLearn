@@ -1,0 +1,8 @@
+.profile-lectures__list {
+    list-style: none;
+}
+
+.profile-lectures__course-name {
+    font-size: larger;
+    color: red;
+}

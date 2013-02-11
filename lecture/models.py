@@ -66,7 +66,7 @@ class Student(models.Model):
 
 class Lecture(models.Model):
     title = models.CharField('Title', max_length=100)
-    course = models.ForeignKey('Course', related_name='courses')
+    course = models.ForeignKey('Course', related_name='lectures')
     number = models.PositiveIntegerField()
     basic_concepts = models.CharField(max_length=300, null=True, blank=True)
     designers = models.ManyToManyField(Student)

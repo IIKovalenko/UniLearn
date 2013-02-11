@@ -26,8 +26,10 @@ class TestQuestionFactory(factory.Factory):
     def variants(self, create, extracted, **kwargs):
         variants_amount = 5
         if extracted:
-            [TestQuestionVariantFactory(question=self) for _ in xrange(variants_amount)]
-
+            [TestQuestionVariantFactory(question=self) for _ in xrange(variants_amount - 1)]
+            correct_answer_index = TestQuestionVariantFactory(question=self, text='Correct variant').number
+            self.correct_answer_index = correct_answer_index
+            self.save()
 
 class TestQuestionVariantFactory(factory.Factory):
     FACTORY_FOR = TestQuestionVariant
