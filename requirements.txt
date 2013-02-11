@@ -6,5 +6,6 @@ pinocchio==0.3.1
 django-debug-toolbar==0.9.4
 django-model-utils==1.1.0
 django-braces==0.1.0
+-e git://github.com/dwaiter/django-ckeditor.git@391ad930ff8f51be7f91943b68ee8df8c58f18ae#egg=django_ckeditor-dev
 
 Django==1.5c1

@@ -1,5 +1,4 @@
 import os
-from django.core.urlresolvers import reverse
 
 
 DEBUG = True
@@ -56,7 +55,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(ROOT_PATH, 'static/')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -133,6 +132,9 @@ INSTALLED_APPS = (
     'django_nose',
     'debug_toolbar',
 
+    # Project specific
+    'ckeditor',
+
     # Project apps
     'unilearn',
     'lecture',
@@ -183,4 +185,31 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # Auth settings
 AUTH_USER_MODEL = 'account.UserProfile'
-LOGIN_URL = reverse('login')
+LOGIN_URL = '/login/'
+
+# ckeditor settings
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            [      'Undo', 'Redo',
+              '-', 'Bold', 'Italic', 'Underline',
+              '-', 'Link', 'Unlink', 'Anchor',
+              '-', 'Format',
+              '-', 'SpellChecker', 'Scayt',
+              '-', 'Maximize',
+            ],
+            [      'HorizontalRule',
+              '-', 'Table',
+              '-', 'BulletedList', 'NumberedList',
+              '-', 'Cut','Copy','Paste','PasteText','PasteFromWord',
+              '-', 'Image',
+              '-', 'SpecialChar',
+              '-', 'Source',
+              '-', 'About',
+            ]
+        ],
+        'width': 840,
+        'height': 300,
+        'toolbarCanCollapse': False,
+    }
+}

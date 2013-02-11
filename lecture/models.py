@@ -1,5 +1,7 @@
 from django.db import models
 
+from ckeditor.fields import HTMLField
+
 
 class University(models.Model):
     name = models.CharField('Name', max_length=100)
@@ -68,7 +70,7 @@ class Lecture(models.Model):
     number = models.PositiveIntegerField()
     basic_concepts = models.CharField(max_length=300, null=True, blank=True)
     designers = models.ManyToManyField(Student)
-    text = models.TextField()
+    text = HTMLField()
 
     class Meta:
         ordering = ("course", "number")
