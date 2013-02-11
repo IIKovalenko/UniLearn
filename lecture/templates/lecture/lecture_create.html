@@ -1,10 +1,29 @@
 {% extends 'layout.html' %}
 
+{% load staticfiles %}
+
+
 {% block title %} Add lecture {% endblock %}
+
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'css/standart.css' %}" rel="stylesheet" >
+{% endblock %}
+
 
 {% block content %}
     <form method="post" class="form">
         {% include 'unilearn/blocks/form.html' with form=form %}
-        <input type="submit" class="btn btn-primary btn-large" value="Lecture course" />
+        <input type="submit" class="btn btn-primary btn-large" value="Add lecture" />
     </form>
 {% endblock %}
+
+
+{% block js %}
+  {{ block.super }}
+    <script src="{% static 'js/ckeditor_jquery_hack.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'ckeditor/init.js' %}"></script>
+{% endblock %}
+
